@@ -27,3 +27,7 @@ title=""
 url=""
 desc=""
 ```
+
+## Acknowledgements
+
+- [Typst: Simple Technical Resume](https://typst.app/universe/package/simple-technical-resume/)
