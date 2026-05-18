@@ -1,5 +1,5 @@
 [package]
-name = "cv2res"
+name = "toml2cv"
 version = "0.1.0"
 edition = "2024"
 
@@ -12,5 +12,5 @@ tera = "1.20.1"
 toml = "1.1.2"
 
 [[bin]]
-name = "cv2res"
+name = "toml2cv"
 path = "src/main.rs"

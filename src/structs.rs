@@ -8,11 +8,11 @@ pub struct CV {
     site: String,
     github: String,
     linkedin: String,
-    edu: Option<Vec<Education>>,
-    wrk: Option<Vec<Work>>,
-    projs: Option<Vec<Proj>>,
-    small_projs: Option<Vec<SmallProj>>,
-    hobby_projs: Option<Vec<HobbyProj>>,
+    institutes: Option<Vec<Education>>,
+    workplaces: Option<Vec<Work>>,
+    projects: Option<Vec<Proj>>,
+    small_projects: Option<Vec<SmallProj>>,
+    hobby_projects: Option<Vec<HobbyProj>>,
 }
 
 #[derive(Debug, Serialize, Deserialize)]
@@ -44,17 +44,17 @@ pub struct Date {
 
 #[derive(Debug, Serialize, Deserialize)]
 pub struct Proj {
-    _title: String,
-    _url: String,
-    _stack: String,
-    _desc: Vec<String>,
+    title: String,
+    url: String,
+    stack: String,
+    desc: Vec<String>,
 }
 
 #[derive(Debug, Serialize, Deserialize)]
 pub struct SmallProj {
-    _title: String,
-    _url: String,
-    _desc: Vec<String>,
+    title: String,
+    url: String,
+    desc: Vec<String>,
 }
 
 type HobbyProj = SmallProj;

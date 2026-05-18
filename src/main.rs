@@ -7,8 +7,9 @@ use crate::structs::CV;
 
 pub mod structs;
 
-const DEFAULT_FNAME: &str = "cv2res.toml";
+const DEFAULT_FNAME: &str = "2cv.toml";
 const DEFAULT_DIR: &str = ".";
+const DEFAULT_TMPLT_NAME: &str = "cv.typ";
 
 #[derive(Parser, Debug)]
 #[command(version, about, long_about = None)]
@@ -18,6 +19,9 @@ struct Args {
 
     #[arg(short, long, default_value = DEFAULT_DIR)]
     dir: String,
+
+    #[arg(short, long, default_value_t = false)]
+    print: bool,
 }
 
 fn parse_cfg_file(path: &str) -> Result<CV> {
@@ -28,8 +32,6 @@ fn parse_cfg_file(path: &str) -> Result<CV> {
 
 fn main() -> Result<()> {
     let args = Args::parse();
-    println!("Running on {} in {}.", args.fpath, args.dir);
-
     if args.dir != DEFAULT_DIR {
         std::env::set_current_dir(args.dir)?;
     }
@@ -37,14 +39,21 @@ fn main() -> Result<()> {
     let cv =
         parse_cfg_file(&args.fpath).with_context(|| "Failed to read config file.".to_string())?;
 
-    let tmplt = include_str!("../template/resume.tmplt");
+    let tmplt = include_str!("../template/cv.typ");
     let mut tera = Tera::default();
-    tera.add_raw_template("core_cv", tmplt)?;
-    let output = tera.render("core_cv", &tera::Context::from_serialize(&cv)?)?;
+    tera.add_raw_template(DEFAULT_TMPLT_NAME, tmplt)?;
+    let output = tera.render(DEFAULT_TMPLT_NAME, &tera::Context::from_serialize(&cv)?)?;
 
-    println!("{output}");
+    if args.print {
+        println!("{output}");
+    }
+
+    // TODO: extract fname
+
     std::fs::write("output.typ", output)
         .with_context(|| "Failed to dump output to file.".to_string())?;
+
+    // TODO: run a typst formatter and `typst compile fname.typ` too
 
     Ok(())
 }

@@ -265,18 +265,6 @@ dependencies = [
 ]
 
 [[package]]
-name = "cv2res"
-version = "0.1.0"
-dependencies = [
- "anyhow",
- "camino",
- "clap",
- "serde",
- "tera",
- "toml",
-]
-
-[[package]]
 name = "deunicode"
 version = "1.6.2"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -865,6 +853,18 @@ dependencies = [
  "toml_parser",
  "toml_writer",
  "winnow",
+]
+
+[[package]]
+name = "toml2cv"
+version = "0.1.0"
+dependencies = [
+ "anyhow",
+ "camino",
+ "clap",
+ "serde",
+ "tera",
+ "toml",
 ]
 
 [[package]]

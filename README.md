@@ -1,31 +1,9 @@
-# cv2res
+# Toml2CV
 
 ```toml
-# config.toml
+# 2cv.toml
 
-name=""
-phone=""
-email=""
-github=""
-site=""
-
-# TODO: update schema here w.r.t structs in src/main.rs
-
-[[proj]]
-title=""
-url=""
-desc=""
-stack=""
-
-[[small-proj]]
-title=""
-url=""
-desc=""
-
-[[hobby-proj]]
-title=""
-url=""
-desc=""
+# TODO: update schema here w.r.t structs in src/structs.rs
 ```
 
 ## Acknowledgements
