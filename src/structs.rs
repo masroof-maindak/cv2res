@@ -1,20 +1,21 @@
-use serde::Deserialize;
+use serde::{Deserialize, Serialize};
 
-#[derive(Debug, Deserialize)]
+#[derive(Debug, Serialize, Deserialize)]
 pub struct CV {
-    _name: String,
-    _phone: String,
-    _email: String,
-    _site: String,
-    _github: String,
-    _edu: Vec<Education>,
-    _wrk: Vec<Work>,
-    _projs: Vec<Proj>,
-    _small_projs: Vec<SmallProj>,
-    _hobby_projs: Vec<HobbyProj>,
+    name: String,
+    phone: String,
+    email: String,
+    site: String,
+    github: String,
+    linkedin: String,
+    edu: Option<Vec<Education>>,
+    wrk: Option<Vec<Work>>,
+    projs: Option<Vec<Proj>>,
+    small_projs: Option<Vec<SmallProj>>,
+    hobby_projs: Option<Vec<HobbyProj>>,
 }
 
-#[derive(Debug, Deserialize)]
+#[derive(Debug, Serialize, Deserialize)]
 pub struct Education {
     _start_date: Date,
     _end_date: Date,
@@ -25,7 +26,7 @@ pub struct Education {
     _desc: Vec<String>,
 }
 
-#[derive(Debug, Deserialize)]
+#[derive(Debug, Serialize, Deserialize)]
 pub struct Work {
     _start_date: Date,
     _end_date: Date,
@@ -34,14 +35,14 @@ pub struct Work {
     _desc: Vec<String>,
 }
 
-#[derive(Debug, Deserialize)]
+#[derive(Debug, Serialize, Deserialize)]
 pub struct Date {
     _year: usize,
     _month: usize,
     _day: usize,
 }
 
-#[derive(Debug, Deserialize)]
+#[derive(Debug, Serialize, Deserialize)]
 pub struct Proj {
     _title: String,
     _url: String,
@@ -49,7 +50,7 @@ pub struct Proj {
     _desc: Vec<String>,
 }
 
-#[derive(Debug, Deserialize)]
+#[derive(Debug, Serialize, Deserialize)]
 pub struct SmallProj {
     _title: String,
     _url: String,

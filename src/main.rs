@@ -1,13 +1,14 @@
 use anyhow::{Context, Result};
 use clap::Parser;
 use std::fs;
+use tera::{self, Tera};
 
 use crate::structs::CV;
 
 pub mod structs;
 
 const DEFAULT_FNAME: &str = "cv2res.toml";
-const DEFAULT_FPATH: &str = ".";
+const DEFAULT_DIR: &str = ".";
 
 #[derive(Parser, Debug)]
 #[command(version, about, long_about = None)]
@@ -15,7 +16,7 @@ struct Args {
     #[arg(short, long, default_value = DEFAULT_FNAME)]
     fpath: String,
 
-    #[arg(short, long, default_value = DEFAULT_FPATH)]
+    #[arg(short, long, default_value = DEFAULT_DIR)]
     dir: String,
 }
 
@@ -29,12 +30,21 @@ fn main() -> Result<()> {
     let args = Args::parse();
     println!("Running on {} in {}.", args.fpath, args.dir);
 
-    if args.dir != DEFAULT_FPATH {
+    if args.dir != DEFAULT_DIR {
         std::env::set_current_dir(args.dir)?;
     }
 
-    let _cv_info =
-        parse_cfg_file(&args.fpath).with_context(|| "Failed to read config file.".to_string());
+    let cv =
+        parse_cfg_file(&args.fpath).with_context(|| "Failed to read config file.".to_string())?;
+
+    let tmplt = include_str!("../template/resume.tmplt");
+    let mut tera = Tera::default();
+    tera.add_raw_template("core_cv", tmplt)?;
+    let output = tera.render("core_cv", &tera::Context::from_serialize(&cv)?)?;
+
+    println!("{output}");
+    std::fs::write("output.typ", output)
+        .with_context(|| "Failed to dump output to file.".to_string())?;
 
     Ok(())
 }
