@@ -24,6 +24,30 @@
   github-username: github,
 )
 
+{#
+  FIXME: tera.render fails when the variables being
+  accesse by the for loop don't exist
+#}
+
+#custom-title("Education")[
+{% for edu in institutes %}
+  #education-heading(
+    "{{ edu.institute }}",
+    "{{ edu.location }}",
+    "{{ edu.degree }}",
+    "{{ edu.major }}",
+    datetime(year: {{ edu.start_date.year }}, month: {{ edu.start_date.month }}, day: {{ edu.start_date.day }}),
+    datetime(year: {{ edu.end_date.year }}, month: {{ edu.end_date.month }}, day: {{ edu.end_date.day }}),
+  )[
+{%- for line in edu.desc %}
+  - {{ line }}
+{%- endfor %}
+  ]
+
+{% endfor -%}
+]
+
+
 #custom-title("Projects")[
 {% for proj in projects %}
   #project-heading(

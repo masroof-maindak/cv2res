@@ -17,29 +17,29 @@ pub struct CV {
 
 #[derive(Debug, Serialize, Deserialize)]
 pub struct Education {
-    _start_date: Date,
-    _end_date: Date,
-    _institute: String,
-    _location: String,
-    _degree: String,
-    _major: String,
-    _desc: Vec<String>,
+    start_date: Date,
+    end_date: Date,
+    institute: String,
+    location: String,
+    degree: String,
+    major: String,
+    desc: Vec<String>,
 }
 
 #[derive(Debug, Serialize, Deserialize)]
 pub struct Work {
-    _start_date: Date,
-    _end_date: Date,
-    _title: String,
-    _company: String,
-    _desc: Vec<String>,
+    start_date: Date,
+    end_date: Date,
+    title: String,
+    company: String,
+    desc: Vec<String>,
 }
 
 #[derive(Debug, Serialize, Deserialize)]
 pub struct Date {
-    _year: usize,
-    _month: usize,
-    _day: usize,
+    year: usize,
+    month: usize,
+    day: usize,
 }
 
 #[derive(Debug, Serialize, Deserialize)]
