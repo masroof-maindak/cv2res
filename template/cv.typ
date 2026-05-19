@@ -25,8 +25,8 @@
 )
 
 {#
-  FIXME: tera.render fails when the variables being
-  accesse by the for loop don't exist
+  FIXME: tera.render fails when the variables being iterated through via for
+  loops don't exist; wrap the entire expression in an 'if \_.is_some()'
 #}
 
 #custom-title("Education")[
@@ -47,6 +47,22 @@
 {% endfor -%}
 ]
 
+#custom-title("Experience")[
+{% for wrk in workplaces %}
+  #work-heading(
+    "{{ wrk.title }}",
+    "{{ wrk.company }}",
+    "",
+    datetime(year: {{ wrk.start_date.year }}, month: {{ wrk.start_date.month }}, day: {{ wrk.start_date.day }}),
+    datetime(year: {{ wrk.end_date.year }}, month: {{ wrk.end_date.month }}, day: {{ wrk.end_date.day }}),
+  )[
+{%- for line in wrk.desc %}
+  - {{ line }}
+{%- endfor %}
+  ]
+
+{% endfor -%}
+]
 
 #custom-title("Projects")[
 {% for proj in projects %}
