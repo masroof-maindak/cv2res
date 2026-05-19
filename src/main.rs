@@ -22,6 +22,7 @@ struct Args {
 
     #[arg(short, long, default_value_t = false)]
     print: bool,
+    // TODO: add override flags for name, phone no. and stuff
 }
 
 fn parse_cfg_file(path: &str) -> Result<CV> {
