@@ -15,6 +15,16 @@ pub struct CV {
     hobby_projects: Option<Vec<HobbyProj>>,
 }
 
+impl CV {
+    pub fn anonymise(&mut self) {
+        self.name = "John Doe".to_string();
+        self.phone = "+1 234 56789".to_string();
+        self.email = "john.doe@gmail.com".to_string();
+        self.github = "github.com".to_string();
+        self.site = "example.com".to_string();
+    }
+}
+
 #[derive(Debug, Serialize, Deserialize)]
 pub struct Education {
     start_date: Date,

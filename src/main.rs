@@ -22,7 +22,9 @@ struct Args {
 
     #[arg(short, long, default_value_t = false)]
     print: bool,
-    // TODO: add override flags for name, phone no. and stuff
+
+    #[arg(short, long, default_value_t = false)]
+    anon: bool,
 }
 
 fn parse_cfg_file(path: &str) -> Result<CV> {
@@ -37,8 +39,12 @@ fn main() -> Result<()> {
         std::env::set_current_dir(args.dir)?;
     }
 
-    let cv =
+    let mut cv =
         parse_cfg_file(&args.fpath).with_context(|| "Failed to read config file.".to_string())?;
+
+    if args.anon {
+        cv.anonymise();
+    }
 
     let tmplt = include_str!("../template/cv.typ");
     let mut tera = Tera::default();
