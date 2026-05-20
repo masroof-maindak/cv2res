@@ -67,12 +67,23 @@ fn run_bin(bin: &str, args: &[&str]) -> Result<()> {
     let exists = check_if_in_path(bin).with_context(|| "Failed to search PATH".to_string())?;
 
     if exists {
-        Command::new(bin)
+        println!("Running `{bin}`");
+
+        let status = Command::new(bin)
             .args(args)
-            .spawn()
+            .status()
             .with_context(|| format!("{bin} failed to start."))?;
 
-        // TODO: check exit code / stderr output
+        if !status.success() {
+            match status.code() {
+                Some(c) => {
+                    eprintln!("`{bin}` failed w/ exit code `{c}`");
+                }
+                None => {
+                    eprintln!("`{bin}` terminated by singal.");
+                }
+            }
+        }
     } else {
         bail!("Failed to find `{bin}` in PATH; skipping.")
     }
@@ -89,8 +100,10 @@ fn parse_cfg_file(path: &str) -> Result<CV> {
 fn main() -> Result<()> {
     let args = Args::parse();
     if args.dir != DEFAULT_DIR {
-        std::env::set_current_dir(args.dir)?;
+        std::env::set_current_dir(&args.dir)?;
     }
+
+    println!("Running on {} in {}", &args.input, &args.dir);
 
     let mut cv =
         parse_cfg_file(&args.input).with_context(|| "Failed to read config file.".to_string())?;
@@ -106,6 +119,8 @@ fn main() -> Result<()> {
 
     std::fs::write(&args.output, output)
         .with_context(|| "Failed to dump output to file.".to_string())?;
+
+    println!("Dumped output to {}", &args.output);
 
     // CHECK: better way to handle results?
 
